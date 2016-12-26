@@ -7,6 +7,26 @@ def test_convert_hex():
     else:
         print('Fail in test_convert_hex')
 
-if __name__ == "__main__":
+def xor(x, y):
+    x_decode = x.decode('hex')
+    y_decode = y.decode('hex')
+    result = ''
+    for a, b in zip(x_decode, y_decode):
+        result += chr(ord(a) ^ ord(b))
+    return result.encode('hex')
+
+def test_xor():
+    x = '1c0111001f010100061a024b53535009181c'
+    y = '686974207468652062756c6c277320657965'
+    if xor(x, y) == '746865206b696420646f6e277420706c6179':
+        print('Success')
+    else:
+        print('Failure %s' % xor(x, y))
+
+def tests():
     test_convert_hex()
+    test_xor()
+
+if __name__ == "__main__":
+    tests()
 
