@@ -20,15 +20,36 @@ def test_xor():
     e = '746865206b696420646f6e277420706c6179'
     assert_(xor(x,y), e)
 
+def single_byte_xor(encoded):
+    # Find the message, given that the key is one character long
+    keys = [str(b) * (len(encoded)-1) for b in range(0, 255)]
+    best = (0.0, '', '')
+    for key in keys:
+        try:
+            tmp = xor(encoded, key).decode('hex')
+            score = sum([1 if ch.isalpha() else 0 for ch in tmp])
+            if score > best[0]:
+                best = (score, tmp, key)
+        except:
+            pass
+    # as it turns out, best is "Cooking MCs like a pound of bacon"
+    return best[1]
+
+def test_single_byte_xor():
+    actual = single_byte_xor('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
+    expected = "Cooking MC's like a pound of bacon"
+    assert_(actual, expected)
+
 def assert_(actual, expected):
     if actual == expected:
         print('Success')
     else:
-        print('Failure: expected %s, but got %s' % (actual, expected))
+        print('Failure: expected %s, but got %s' % (expected, actual))
 
 def tests():
     test_convert_hex()
     test_xor()
+    test_single_byte_xor()
 
 if __name__ == "__main__":
     tests()
