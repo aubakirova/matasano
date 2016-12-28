@@ -77,13 +77,31 @@ def assert_(actual, expected):
     else:
         print('Failure: expected %s, but got %s' % (expected, actual))
 
+def repeating_xor(encode, key):
+    key = array.array('B', key)
+    byte_array = array.array('B', encode)
+    result = byte_array
+    current = 0
+    for i in range(len(byte_array)):
+        result[i] = byte_array[i] ^ key[current]
+        current = current + 1
+        if current > len(key)-1:
+            current = 0
+    return "".join("{:c}".format(b) for b in result).encode('hex')
+
+def test_repeating_xor():
+    actual = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"
+    expected = ("0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765"
+                "272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27"
+                "282f")
+    assert_(repeating_xor(actual, "ICE"), expected)
+
 def tests():
     test_convert_hex()
     test_xor()
     test_single_byte_xor()
     test_detect_single_line()
+    test_repeating_xor()
 
 if __name__ == "__main__":
     tests()
-    detect_single_line()
-
