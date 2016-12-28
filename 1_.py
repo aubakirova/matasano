@@ -1,6 +1,12 @@
 import array
 import re
 
+def assert_(actual, expected):
+    if actual == expected:
+        print('Success')
+    else:
+        print('Failure: expected %s, but got %s' % (expected, actual))
+
 def convert_hex(input):
     return input.decode("hex").encode("base64")
 
@@ -41,6 +47,11 @@ def single_byte_xor(encoded):
     # as it turns out, best is "Cooking MCs like a pound of bacon"
     return best
 
+def test_single_byte_xor():
+    actual = single_byte_xor('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
+    expected = "Cooking MC's like a pound of bacon"
+    assert_(actual[1], expected)
+
 def read_file(name):
     f = open('files/' + name, 'r')
     return f
@@ -65,17 +76,6 @@ def test_detect_single_line():
     actual = detect_single_line()
     expected = 'Now that the party is jumping\n'
     assert_(actual[1], expected)
-
-def test_single_byte_xor():
-    actual = single_byte_xor('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
-    expected = "Cooking MC's like a pound of bacon"
-    assert_(actual[1], expected)
-
-def assert_(actual, expected):
-    if actual == expected:
-        print('Success')
-    else:
-        print('Failure: expected %s, but got %s' % (expected, actual))
 
 def repeating_xor(encode, key):
     key = array.array('B', key)
