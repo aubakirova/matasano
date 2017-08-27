@@ -1,11 +1,6 @@
 import array
 import re
-
-def assert_(actual, expected):
-    if actual == expected:
-        print('Success')
-    else:
-        print('Failure: expected %s, but got %s' % (expected, actual))
+from utils import assert_
 
 def convert_hex(input):
     return input.decode("hex").encode("base64")
@@ -89,6 +84,7 @@ def repeating_xor(encode, key):
             current = 0
     return "".join("{:c}".format(b) for b in result).encode('hex')
 
+# Set 5. Challenge 5. Implement repeating-key XOR
 def test_repeating_xor():
     actual = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"
     expected = ("0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765"
