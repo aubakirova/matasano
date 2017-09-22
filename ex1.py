@@ -66,6 +66,7 @@ def detect_single_line():
         tmp = sorted(best + [current], key=sort_score)
         best = tmp[:-1]
     # print best
+    f.close()
     return best[0]
 
 def test_detect_single_line():
@@ -99,8 +100,6 @@ def byte_or(b1, b2):
     return str(bytearray(res))
 
 def edit_distance(a1, a2):
-    a1 = "this is a test"
-    a2 = "wokka wokka!!!"
     b1 = bytearray(a1)
     b2 = bytearray(a2)
     b = byte_or(b1, b2)
