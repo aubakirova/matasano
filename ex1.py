@@ -98,17 +98,21 @@ def byte_or(b1, b2):
     res = [i^j for i, j in zip(b1, b2)]
     return str(bytearray(res))
 
-def edit_distance():
+def edit_distance(a1, a2):
     a1 = "this is a test"
     a2 = "wokka wokka!!!"
     b1 = bytearray(a1)
     b2 = bytearray(a2)
     b = byte_or(b1, b2)
     dist = 0
-    for char in xor_result:
+    for char in b:
         dist += bin(ord(char))[2:].count('1')
-    print("Edit distance between "  + a1 + " and " + a2
-            + " is " + str(dist))
+    return dist
+
+def test_edit_distance():
+    a1 = "this is a test"
+    a2 = "wokka wokka!!!"
+    assert_(edit_distance(a1, a2), 37)
 
 def tests():
     test_convert_hex()
@@ -116,7 +120,7 @@ def tests():
     test_single_byte_xor()
     test_detect_single_line()
     test_repeating_xor()
+    test_edit_distance()
 
 if __name__ == "__main__":
-    # tests()
-    edit_distance()
+    tests()
