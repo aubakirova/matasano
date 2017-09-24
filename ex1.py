@@ -92,6 +92,17 @@ def test_repeating_xor():
                 "282f")
     assert_(repeating_xor(actual, "ICE"), expected)
 
+def edit_distance():
+    a1 = "this is a test"
+    a2 = "wokka wokka!!!"
+    def bin_representation(st):
+        return ''.join(format(ord(x), 'b') for x in st)
+    import editdistance
+    b1 = bin_representation(a1)
+    b2 = bin_representation(a2)
+    print("Edit distance between "  + a1 + " and " + a2
+            + " is " + editdistance.eval(b1, b2))
+
 def tests():
     test_convert_hex()
     test_xor()
@@ -100,4 +111,5 @@ def tests():
     test_repeating_xor()
 
 if __name__ == "__main__":
-    tests()
+    # tests()
+    edit_distance()
