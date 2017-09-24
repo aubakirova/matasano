@@ -1,5 +1,6 @@
 import array
 import re
+import editdistance
 from utils import assert_
 
 def convert_hex(input):
@@ -92,16 +93,22 @@ def test_repeating_xor():
                 "282f")
     assert_(repeating_xor(actual, "ICE"), expected)
 
+def byte_or(b1, b2):
+    # return [ord(a) ^ ord(b) for a,b in zip(x, y)]
+    res = [i^j for i, j in zip(b1, b2)]
+    return str(bytearray(res))
+
 def edit_distance():
     a1 = "this is a test"
     a2 = "wokka wokka!!!"
-    def bin_representation(st):
-        return ''.join(format(ord(x), 'b') for x in st)
-    import editdistance
-    b1 = bin_representation(a1)
-    b2 = bin_representation(a2)
+    b1 = bytearray(a1)
+    b2 = bytearray(a2)
+    b = byte_or(b1, b2)
+    dist = 0
+    for char in xor_result:
+        dist += bin(ord(char))[2:].count('1')
     print("Edit distance between "  + a1 + " and " + a2
-            + " is " + editdistance.eval(b1, b2))
+            + " is " + str(dist))
 
 def tests():
     test_convert_hex()
