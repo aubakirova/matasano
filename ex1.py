@@ -52,9 +52,7 @@ def read_file(name):
     f = open('files/' + name, 'r')
     return f
 
-def detect_single_line():
-    filename = '4.txt'
-    f = read_file(filename)
+def detect_single_line(f = read_file('4.txt')):
     # let's keep 3 best sentences
     best = [(0.0, '', '')] * 3
     def sort_score(t):
