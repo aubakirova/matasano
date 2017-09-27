@@ -25,9 +25,8 @@ def test_xor():
     e = '746865206b696420646f6e277420706c6179'
     assert_(xor(x,y), e)
 
-def single_byte_xor(encoded):
+def single_byte_xor_helper(byte_array):
     # Find the message, given that the key is one character long
-    byte_array = array.array('B', encoded.decode('hex'))
     best = (0.0, '', '')
     for key in xrange(0,256):
         try:
@@ -37,11 +36,15 @@ def single_byte_xor(encoded):
                 continue
             score = sum([1 if ch.isalpha() else 0 for ch in result_array])
             if score > best[0]:
-                best = (score, result_array, key)
+                best = (score, result_array, array.array('B', [key]).tostring())
         except:
             pass
     # as it turns out, best is "Cooking MCs like a pound of bacon"
     return best
+
+def single_byte_xor(encoded):
+    byte_array = array.array('B', encoded.decode('hex'))
+    return single_byte_xor_helper(byte_array)
 
 def test_single_byte_xor():
     actual = single_byte_xor('1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736')
